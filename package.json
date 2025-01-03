@@ -14,10 +14,19 @@
   "contributes": {
     "commands": [
       {
-        "command": "vs-code-esmock.helloWorld",
-        "title": "Hello World"
+        "command": "vs-code-esmock.initTest",
+        "title": "Init test"
       }
-    ]
+    ],
+    "menus": {
+      "commandPalette": [{
+        "command": "vs-code-esmock.initTest",
+        "when": "editorLangId == typescript || editorLangId == javascript"
+      }],
+      "issue/reporter": [{
+        "command": "extension.myCommand"
+      }]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

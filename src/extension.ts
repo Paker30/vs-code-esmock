@@ -8,15 +8,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vs-code-esmock" is now active!');
+	console.log('"vs-code-esmock" is ready!');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('vs-code-esmock.helloWorld', () => {
+	const disposable = vscode.commands.registerCommand('vs-code-esmock.initTest', () => {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from vs-code-esmock!');
+		vscode.window.showInformationMessage('Hello World from vs-code-esmock2!');
 	});
 
 	context.subscriptions.push(disposable);
