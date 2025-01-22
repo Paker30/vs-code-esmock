@@ -36,6 +36,12 @@ export const initTest = async () => {
         editBuilder.insert(editor.selection.active, 'import esmock from \'esmock\';\n');
         editBuilder.insert(editor.selection.active, 'import assert from \'node:assert/strict\';\n');
         editBuilder.insert(editor.selection.active, 'import { describe, test } from \'node:test\';\n');
-        editBuilder.insert(editor.selection.active, `describe(\'your first describe\', async() =>{\nconst f = await esmock.strict('${formatPath(pathTo)}', {${mockedImports?.join(',')}}, {});\ntest(\'your first test\', () =>{\nassert.equal(1, 1);});});`);
+        editBuilder.insert(editor.selection.active, 
+            `describe(\'your first describe\',async() =>{
+                    const f = await esmock.strict('${formatPath(pathTo)}', {${mockedImports?.join(',')}}, {});
+                    test(\'your first test\', () =>{
+                        assert.equal(1, 1);
+                    });
+            });`);
     });
 };
