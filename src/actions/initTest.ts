@@ -2,8 +2,10 @@ import * as vscode from 'vscode';
 import { dirname, relative } from 'node:path';
 
 const formatPath = (path: string) => path.includes('/') ? path : `./${path}`;
-const importedRegex = /import\s+(?:{[^{}]+}|.*?)\s*(?:from)?\s*['"].*?['"];/g;
-const splitImportRegex = /import\s*{?\s*([^}]*?)\s*}?\s*from\s*['"]([^'"]+)['"]/g;
+export const importedRegex = /import\s+(?:{[^{}]+}|.*?)\s*(?:from)?\s*['"].*?['"];/g;
+export const splitImportRegex = /import\s+(?:(\w+)\s*,?\s*)?(?:{([^}]+)})?\s+from\s+['"]([^'"]+)['"]/g;
+
+const identity = <T>(arg: T): T => arg;
 
 export const initTest = async () => {
     const editor = vscode.window.activeTextEditor;
@@ -27,16 +29,18 @@ export const initTest = async () => {
                 ?.map((line) => new RegExp(splitImportRegex).exec(line))
                 .map((importedContent) => {
                     const path = importedContent?.pop();
-                    const imports = importedContent?.slice(1);
-                    const mockedFunctions = imports?.map((fn) => `${fn}: () => {}`);
+                    const [defaultImport, imports] = importedContent?.slice(1)!;
+                    const mockedFunctions = [defaultImport ? 'default' : defaultImport, ...imports.split(',')]
+                        .filter(identity)
+                        .map((fn) => `${fn}: () => {}`);
                     return `'${path}': { ${mockedFunctions?.join(',')}}`;
                 });
         });
     editor.edit((editBuilder) => {
         editBuilder.insert(editor.selection.active, 'import esmock from \'esmock\';\n');
         editBuilder.insert(editor.selection.active, 'import assert from \'node:assert/strict\';\n');
-        editBuilder.insert(editor.selection.active, 'import { describe, test } from \'node:test\';\n');
-        editBuilder.insert(editor.selection.active, 
+        editBuilder.insert(editor.selection.active, 'import { describe, mock, test } from \'node:test\';\n');
+        editBuilder.insert(editor.selection.active,
             `describe(\'your first describe\',async() =>{
                     const f = await esmock.strict('${formatPath(pathTo)}', {${mockedImports?.join(',')}}, {});
                     test(\'your first test\', () =>{
