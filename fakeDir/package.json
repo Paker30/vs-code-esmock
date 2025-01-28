@@ -1,0 +1,15 @@
+{
+  "name": "fakedir",
+  "version": "1.0.0",
+  "main": "utils.js",
+  "scripts": {
+    "test": "node --loader=esmock --test"
+  },
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "esmock": "^2.7.0"
+  }
+}
