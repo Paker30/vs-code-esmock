@@ -33,7 +33,7 @@ export const initTest = async () => {
                     const mockedFunctions = [defaultImport ? 'default' : defaultImport, ...imports.split(',')]
                         .filter(identity)
                         .map((fn) => `${fn}: () => {}`);
-                    return `'${path}': { ${mockedFunctions?.join(',')}}`;
+                    return `'${relative(pathTo, path!)}': { ${mockedFunctions?.join(',')}}`;
                 });
         });
     editor.edit((editBuilder) => {
