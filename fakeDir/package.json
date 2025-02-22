@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "main": "utils.js",
   "scripts": {
-    "test": "node --loader=esmock --test"
+    "test": "node --experimental-strip-types --loader=esmock --test"
   },
   "type": "module",
   "author": "",
   "license": "MIT",
   "description": "",
   "devDependencies": {
-    "esmock": "^2.7.0"
+    "esmock": "^2.7.0",
+    "typescript": "^5.7.3"
   }
 }
