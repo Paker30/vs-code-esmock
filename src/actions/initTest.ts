@@ -4,6 +4,7 @@ import { dirname, relative } from 'node:path';
 const formatPath = (path: string) => path.includes('/') ? path : `./${path}`;
 export const importedRegex = /import\s+(?:{[^{}]+}|.*?)\s*(?:from)?\s*['"].*?['"];/g;
 export const splitImportRegex = /import\s+([\w$]+)?(?:,?\s*{([^}]*)})?\s*from\s*['"]([^'"]+)['"]/g;
+export const typeRegex = /\s*?type\s*(\w*)/gm;
 
 const identity = <T>(arg: T): T => arg;
 
@@ -32,7 +33,8 @@ export const initTest = async () => {
                     const [defaultImport, imports] = importedContent?.slice(1)!;
                     const mockedFunctions = [defaultImport ? 'default' : defaultImport, ...imports.split(',')]
                         .filter(identity)
-                        .map((fn) => `${fn}: () => {}`);
+                        .map((imp) => new RegExp(typeRegex).test(imp) ? new RegExp(typeRegex).exec(imp)![1] : imp)   
+                        .map((fn) => `${fn}: mock.fn()`);
                     return `'${relative(pathTo, path!)}': { ${mockedFunctions?.join(',')}}`;
                 });
         });
