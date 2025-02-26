@@ -3,6 +3,7 @@
   "displayName": "vs-code-esmock",
   "description": "esmock test scafolding",
   "version": "0.0.1",
+  "publisher": "vs-code-esmock",
   "engines": {
     "vscode": "^1.96.0"
   },
