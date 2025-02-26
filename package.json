@@ -4,6 +4,10 @@
   "description": "esmock test scafolding",
   "version": "0.0.1",
   "publisher": "vs-code-esmock",
+  "repository": {
+        "type": "git",
+        "url": "git@github.com:Paker30/vs-code-esmock.git"
+    },
   "engines": {
     "vscode": "^1.96.0"
   },
