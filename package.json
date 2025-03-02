@@ -5,9 +5,9 @@
   "version": "0.0.1",
   "publisher": "vs-code-esmock",
   "repository": {
-        "type": "git",
-        "url": "git@github.com:Paker30/vs-code-esmock.git"
-    },
+    "type": "git",
+    "url": "git@github.com:Paker30/vs-code-esmock.git"
+  },
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -50,7 +50,8 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "test": "vscode-test",
-    "deploy": "vsce publish --yarn"
+    "deploy": "vsce publish --yarn",
+    "cm": "cz"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -60,9 +61,16 @@
     "@typescript-eslint/parser": "^8.17.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.24.0",
     "eslint": "^9.16.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
