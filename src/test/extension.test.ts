@@ -10,29 +10,29 @@ suite('Extension Test Suite', () => {
 
 	suite('importedRegex', () => {
 		test('import with default and destructuring', () => {
-			assert.match("import cheers, { hello, goodbye, greeter, Person } from './other.ts';", importedRegex);
+			assert.match("import cheers, { hello, goodbye, greeter, Person } from './other.ts';", new RegExp(importedRegex));
 		});
 
 		test('import with destructuring', () => {
-			assert.match("import { goodbye, greeter, Person } from './other.ts';", importedRegex);
+			assert.match("import { goodbye, greeter, Person } from './other.ts';", new RegExp(importedRegex));
 		});
 
 		test('import default', () => {
-			assert.match("import cheers from './other.ts';", importedRegex);
+			assert.match("import cheers from './other.ts';", new RegExp(importedRegex));
 		});
 	});
 
-	// suite('splitImportRegex', () => {
-		// test('import with default and destructuring', () => {
-		// 	assert.ok(new RegExp(splitImportRegex).exec("import cheers, { hello, goodbye, greeter, Person } from './other.ts';"));
-		// });
+	suite('splitImportRegex', () => {
+		test('import with default and destructuring', () => {
+			assert.match(("import cheers, { hello, goodbye, greeter, Person } from './other.ts';"), new RegExp(splitImportRegex));
+		});
 
-		// test('import with destructuring', () => {
-		// 	assert.ok(new RegExp(splitImportRegex).test("import { goodbye, greeter, Person } from './other.ts';"));
-		// });
+		test('import with destructuring', () => {
+			assert.match(("import { goodbye, greeter, Person } from './other.ts';"), new RegExp(splitImportRegex));
+		});
 
-		// test('import default', () => {
-		// 	assert.ok(new RegExp(splitImportRegex).test("import cheers from './other.ts';"));
-		// });
-	// });
+		test('import default', () => {
+			assert.match(("import cheers from './other.ts';"), new RegExp(splitImportRegex));
+		});
+	});
 });

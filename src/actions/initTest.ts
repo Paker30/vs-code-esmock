@@ -2,8 +2,8 @@ import * as vscode from 'vscode';
 import { dirname, relative } from 'node:path';
 
 const formatPath = (path: string) => path.includes('/') ? path : `./${path}`;
-export const importedRegex = /import\s+(?:{[^{}]+}|.*?)\s*(?:from)?\s*['"].*?['"];/g;
-export const splitImportRegex = /import\s+([\w$]+)?(?:,?\s*{([^}]*)})?\s*from\s*['"]([^'"]+)['"]/g;
+export const importedRegex = /import\s+(?:{[^{}]+}|.*?)\s*(?:from)?\s*['"].*?['"];?/g;
+export const splitImportRegex = /import\s+([\w$]+)?(?:,?\s*{([^}]*)})?\s*from\s*['"]([^'"]+)['"];?/g;
 export const typeRegex = /\s*?type\s*(\w*)/gm;
 
 const identity = <T>(arg: T): T => arg;
