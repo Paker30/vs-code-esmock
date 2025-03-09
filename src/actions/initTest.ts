@@ -8,6 +8,29 @@ export const typeRegex = /\s*?type\s*(\w*)/gm;
 
 const identity = <T>(arg: T): T => arg;
 
+export const createTest = ({
+    editor,
+    pathTo,
+    mockedImports
+}: {
+    editor: vscode.TextEditor,
+    pathTo: string;
+    mockedImports: string[] | undefined
+}) => (editBuilder: vscode.TextEditorEdit) => {
+
+    editBuilder.insert(editor.selection.active, 'import esmock from \'esmock\';\n');
+    editBuilder.insert(editor.selection.active, 'import assert from \'node:assert/strict\';\n');
+    editBuilder.insert(editor.selection.active, 'import { describe, mock, test } from \'node:test\';\n');
+    editBuilder.insert(editor.selection.active,
+        `describe(\'your first describe\',async() =>{
+                const f = await esmock.strict('${pathTo}', {${mockedImports?.join(',')}}, {});
+                test(\'your first test\', () =>{
+                    assert.equal(1, 1);
+                });
+        });`);
+
+};
+
 export const initTest = async () => {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
@@ -33,21 +56,10 @@ export const initTest = async () => {
                     const [defaultImport, imports] = importedContent?.slice(1)!;
                     const mockedFunctions = [defaultImport ? 'default' : defaultImport, ...imports.split(',')]
                         .filter(identity)
-                        .map((imp) => new RegExp(typeRegex).test(imp) ? new RegExp(typeRegex).exec(imp)![1] : imp)   
+                        .map((imp) => new RegExp(typeRegex).test(imp) ? new RegExp(typeRegex).exec(imp)![1] : imp)
                         .map((fn) => `${fn}: mock.fn()`);
                     return `'${relative(pathTo, path!)}': { ${mockedFunctions?.join(',')}}`;
                 });
         });
-    editor.edit((editBuilder) => {
-        editBuilder.insert(editor.selection.active, 'import esmock from \'esmock\';\n');
-        editBuilder.insert(editor.selection.active, 'import assert from \'node:assert/strict\';\n');
-        editBuilder.insert(editor.selection.active, 'import { describe, mock, test } from \'node:test\';\n');
-        editBuilder.insert(editor.selection.active,
-            `describe(\'your first describe\',async() =>{
-                    const f = await esmock.strict('${formatPath(pathTo)}', {${mockedImports?.join(',')}}, {});
-                    test(\'your first test\', () =>{
-                        assert.equal(1, 1);
-                    });
-            });`);
-    });
+    editor.edit(createTest({ editor, pathTo: formatPath(pathTo), mockedImports}));
 };
