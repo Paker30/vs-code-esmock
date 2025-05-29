@@ -4,6 +4,18 @@ All notable changes to the "vs-code-esmock" extension will be documented in this
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.1.0](https://github.com/Paker30/vs-code-esmock/compare/v1.0.0...v1.1.0) (2025-05-29)
+
+
+### Features
+
+* deal with imports paths ([1e6688b](https://github.com/Paker30/vs-code-esmock/commit/1e6688ba23c7fc6349122a95110d3a4ffa4a30ed))
+
+
+### Bug Fixes
+
+* it mocks default imports ([f3d8c0f](https://github.com/Paker30/vs-code-esmock/commit/f3d8c0f8b06c5fe0f4853195320e0ec8643630e0))
+
 ## 1.0.0 (2025-03-02)
 
 
