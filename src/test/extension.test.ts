@@ -41,15 +41,15 @@ suite('Extension Test Suite', () => {
 		const fakePath = 'utils';
 		test('import default', () => {
 			const [createdCode] = generateCode(fakePath)('import cheers from \'./utils.ts\';')!;
-			assert.equal(createdCode, "'../utils.ts': { default: mock.fn()}");
+			assert.equal(createdCode.replace('\\', '/'), "'../utils.ts': { default: mock.fn()}");
 		});
 		test('import with destructuring', () => {
 			const [createdCode] = generateCode(fakePath)("import { goodbye, greeter, Person } from './utils.ts';")!;
-			assert.equal(createdCode, "'../utils.ts': {  goodbye: mock.fn(), greeter: mock.fn(), Person : mock.fn()}");
+			assert.equal(createdCode.replace('\\', '/'), "'../utils.ts': {  goodbye: mock.fn(), greeter: mock.fn(), Person : mock.fn()}");
 		});
 		test('import with default and destructuring', () => {
 			const [createdCode] = generateCode(fakePath)("import cheers, { hello, goodbye, greeter, Person } from './utils.ts';")!;
-			assert.equal(createdCode, "'../utils.ts': { default: mock.fn(), hello: mock.fn(), goodbye: mock.fn(), greeter: mock.fn(), Person : mock.fn()}");
+			assert.equal(createdCode.replace('\\', '/'), "'../utils.ts': { default: mock.fn(), hello: mock.fn(), goodbye: mock.fn(), greeter: mock.fn(), Person : mock.fn()}");
 		});
 	});
 
