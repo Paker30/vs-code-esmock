@@ -27,7 +27,7 @@
       "commandPalette": [
         {
           "command": "vs-code-esmock.initTest",
-          "when": "editorLangId == typescript || editorLangId == javascript"
+          "when": "editorLangId == typescript || editorLangId == javascript || editorLangId == javascriptreact || editorLangId == typescriptreact"
         }
       ],
       "issue/reporter": [
