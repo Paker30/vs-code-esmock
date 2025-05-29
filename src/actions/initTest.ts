@@ -53,7 +53,7 @@ export const initTest = async () => {
                 ?.map((line) => new RegExp(splitImportRegex).exec(line))
                 .map((importedContent) => {
                     const path = importedContent?.pop();
-                    const [defaultImport, imports] = importedContent?.slice(1)!;
+                    const [_, defaultImport, imports = ''] = importedContent!;
                     const mockedFunctions = [defaultImport ? 'default' : defaultImport, ...imports.split(',')]
                         .filter(identity)
                         .map((imp) => new RegExp(typeRegex).test(imp) ? new RegExp(typeRegex).exec(imp)![1] : imp)
