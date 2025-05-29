@@ -51,6 +51,10 @@ suite('Extension Test Suite', () => {
 			const [createdCode] = generateCode(fakePath)("import cheers, { hello, goodbye, greeter, Person } from './utils.ts';")!;
 			assert.equal(createdCode.replace('\\', '/'), "'../utils.ts': { default: mock.fn(), hello: mock.fn(), goodbye: mock.fn(), greeter: mock.fn(), Person : mock.fn()}");
 		});
+		test('import with relative path (#src/...)', () => {
+			const [createdCode] = generateCode(fakePath)("import cheers, { hello, goodbye, greeter, Person } from '#src/utils.ts';")!;
+			assert.equal(createdCode.replace('\\', '/'), "'#src/utils.ts': { default: mock.fn(), hello: mock.fn(), goodbye: mock.fn(), greeter: mock.fn(), Person : mock.fn()}");
+		});
 	});
 
 	suite('writeTest', () => {
