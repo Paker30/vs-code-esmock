@@ -4,6 +4,14 @@ All notable changes to the "vs-code-esmock" extension will be documented in this
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.0](https://github.com/Paker30/vs-code-esmock/compare/v1.1.0...v1.2.0) (2025-05-29)
+
+
+### Features
+
+* **editorlang:** extension also works with React files (jsx and tsx) ([13ed35f](https://github.com/Paker30/vs-code-esmock/commit/13ed35fdc7ef12a75f376de188b4ae82d224f3a4))
+* **editorlang:** extension also works with React files (jsx and tsx) ([8c456ae](https://github.com/Paker30/vs-code-esmock/commit/8c456ae26635ac6ab82259a70f6954f1f125d695))
+
 ## [1.1.0](https://github.com/Paker30/vs-code-esmock/compare/v1.0.0...v1.1.0) (2025-05-29)
 
 

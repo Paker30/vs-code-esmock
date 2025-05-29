@@ -2,7 +2,7 @@
   "name": "vs-code-esmock",
   "displayName": "vs-code-esmock",
   "description": "esmock test scafolding",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "vs-code-esmock",
   "repository": {
     "type": "git",
