@@ -8,7 +8,7 @@ export const typeRegex = /\s*?type\s*(\w*)/gm;
 
 const identity = <T>(arg: T): T => arg;
 
-export const createTest = ({
+export const writeTest = ({
     editor,
     pathTo,
     mockedImports
@@ -31,6 +31,20 @@ export const createTest = ({
 
 };
 
+export const generateCode = (pathTo: string) => (content: string) => {
+    return content.match(importedRegex)
+        ?.map((line) => new RegExp(splitImportRegex).exec(line))
+        .map((importedContent) => {
+            const path = importedContent?.pop();
+            const [_, defaultImport, imports = ''] = importedContent!;
+            const mockedFunctions = [defaultImport ? 'default' : defaultImport, ...imports.split(',')]
+                .filter(identity)
+                .map((imp) => new RegExp(typeRegex).test(imp) ? new RegExp(typeRegex).exec(imp)![1] : imp)
+                .map((fn) => `${fn}: mock.fn()`);
+            return `'${relative(pathTo, path!)}': { ${mockedFunctions?.join(',')}}`;
+        });
+};
+
 export const initTest = async () => {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
@@ -48,18 +62,6 @@ export const initTest = async () => {
     const pathTo = relative(dirname(vscode.window.activeTextEditor!.document.uri.fsPath), targetFile[0].fsPath);
     const mockedImports = await vscode.workspace.fs.readFile(targetFile[0])
         .then((readData) => Buffer.from(readData).toString('utf8'))
-        .then((content) => {
-            return content.match(importedRegex)
-                ?.map((line) => new RegExp(splitImportRegex).exec(line))
-                .map((importedContent) => {
-                    const path = importedContent?.pop();
-                    const [defaultImport, imports] = importedContent?.slice(1)!;
-                    const mockedFunctions = [defaultImport ? 'default' : defaultImport, ...imports.split(',')]
-                        .filter(identity)
-                        .map((imp) => new RegExp(typeRegex).test(imp) ? new RegExp(typeRegex).exec(imp)![1] : imp)
-                        .map((fn) => `${fn}: mock.fn()`);
-                    return `'${relative(pathTo, path!)}': { ${mockedFunctions?.join(',')}}`;
-                });
-        });
-    editor.edit(createTest({ editor, pathTo: formatPath(pathTo), mockedImports}));
+        .then(generateCode(pathTo));
+    editor.edit(writeTest({ editor, pathTo: formatPath(pathTo), mockedImports }));
 };
